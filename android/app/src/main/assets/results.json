@@ -1,0 +1,155 @@
+{
+ "updated": "2026-10-25",
+ "source": "Numbers saved at export time (export-v1.1 full run) and from eval-final-v2 / probe-v2 on the TEST split. Replace this file with the eval-final-v4 results and rebuild to refresh the tab.",
+ "sections": [
+  {
+   "title": "This export, on the TEST split (1,001 studies)",
+   "note": "CE14 / CE5: CheXbert clinical-efficacy F1 of the generated impression against the reference, over all 14 labels / the 5 most common findings. Measured with the exported ONNX models on a Kaggle CPU.",
+   "rows": [
+    [
+     "CE14 F1",
+     "0.586",
+     "fp32 and fp16-storage decoders give identical reports"
+    ],
+    [
+     "CE5 F1",
+     "0.522",
+     ""
+    ],
+    [
+     "CE5 recall",
+     "0.490",
+     ""
+    ],
+    [
+     "CE5 precision",
+     "0.560",
+     ""
+    ],
+    [
+     "Distinct reports",
+     "104 of 1,001",
+     "hit-length-cap 0%, repeated trigram 0.1%"
+    ],
+    [
+     "Deployment loss",
+     "none",
+     "identical to the fp32 reference on 100% of the TEST reports"
+    ]
+   ]
+  },
+  {
+   "title": "Student against its 3B teacher (TEST)",
+   "note": "Student = this model (K10s1_fb2, about 95M parameters). Teacher = CheXagent-2-3b. RadCliQ: lower is better.",
+   "rows": [
+    [
+     "CE5 F1",
+     "0.521 vs 0.376",
+     "student vs teacher"
+    ],
+    [
+     "CE5 recall",
+     "0.485 vs 0.303",
+     ""
+    ],
+    [
+     "RadGraph ER",
+     "0.146 vs 0.105",
+     "higher is better"
+    ],
+    [
+     "RadCliQ v1",
+     "1.262 vs 1.414",
+     "lower is better"
+    ],
+    [
+     "BERTScore (student)",
+     "0.353",
+     ""
+    ],
+    [
+     "False reassurance",
+     "0.278 vs 0.257",
+     "student vs teacher; the student is slightly worse here"
+    ]
+   ]
+  },
+  {
+   "title": "Screening flags and the text (TEST, five common findings)",
+   "note": "Pooled over Cardiomegaly, Edema, Consolidation, Atelectasis and Pleural Effusion. Flags are tuned for about 90% sensitivity on validation.",
+   "rows": [
+    [
+     "Report text only: sensitivity",
+     "0.485",
+     "95% CI 0.450 to 0.520"
+    ],
+    [
+     "Report text only: specificity",
+     "0.930",
+     ""
+    ],
+    [
+     "Flags only: sensitivity",
+     "0.921",
+     "95% CI 0.900 to 0.938"
+    ],
+    [
+     "Flags only: specificity",
+     "0.499",
+     ""
+    ],
+    [
+     "Text OR flags: sensitivity",
+     "0.927",
+     "95% CI 0.907 to 0.944"
+    ],
+    [
+     "Text OR flags: specificity",
+     "0.489",
+     ""
+    ],
+    [
+     "Flags per study",
+     "5.8",
+     "90% of studies without findings get at least one flag"
+    ],
+    [
+     "Abnormal studies with any flag",
+     "99.7%",
+     "a safety net, not a triage tool"
+    ]
+   ]
+  },
+  {
+   "title": "Compression of the decoder (TEST, paired against fp32)",
+   "note": "Only the fp16-storage decoder passed the pre-registered check, so it is the one in the app.",
+   "rows": [
+    [
+     "fp32",
+     "185 MB",
+     "reference"
+    ],
+    [
+     "fp16 storage (in the app)",
+     "93 MB",
+     "identical on all 1,001 reports"
+    ],
+    [
+     "int8 dynamic",
+     "56 MB",
+     "fails: CE5 -0.039 [-0.059, -0.020], 1.8% identical reports"
+    ],
+    [
+     "4-bit weight-only",
+     "39 MB",
+     "fails: generation collapses (97.5% hit the length cap)"
+    ]
+   ]
+  },
+  {
+   "title": "How to read these numbers",
+   "note": "The app is a draft-report assistant, not a diagnostic device. The student writes the common findings well; the report text never names 7 of the 10 flagged findings, which are rare in the training data.",
+   "rows": []
+  }
+ ]
+}
