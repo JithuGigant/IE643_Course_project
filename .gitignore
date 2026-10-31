@@ -1,0 +1,34 @@
+# data, model weights and build artefacts (large and/or licensed: CheXpert Plus is under Stanford's RUA)
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.apk
+*.aab
+*.h5
+*.zip
+*.bundle
+images_*/
+data/
+distill_runs/
+distill_runs_smoke/
+teacher_final/
+teacher_cache/
+# credentials: never commit
+kaggle.json
+.env
+*.token
+secrets*
+# python / jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

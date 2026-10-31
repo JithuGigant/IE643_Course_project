@@ -1,0 +1,6 @@
+# Store notebooks without outputs (pip install nbstripout && nbstripout --install)
+*.ipynb filter=nbstripout
+*.ipynb diff=ipynb
+* text=auto eol=lf
+*.bat text eol=crlf
+*.jar binary
